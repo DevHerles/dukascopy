@@ -55,4 +55,18 @@ This script will:
 - **Resilient Downloads**: Includes exponential backoff for handling 503/429 errors from Dukascopy, ensuring downloads continue even under rate limiting.
 - **Bulk Wrapper**: `download_wrapper.py` handles multi-year downloads with automatic pauses to be friendly to the server limits.
 
+## Visualization
+To generate a dynamic HTML chart with EMA50 and EMA200:
+
+```bash
+python plot_data.py --data data/YOUR_FILE.csv
+```
+
+Example:
+```bash
+python plot_data.py --data data/XAUUSD_2010.csv
+```
+This will create `data/XAUUSD_2010.html` which you can open in any web browser.
+
+
 
