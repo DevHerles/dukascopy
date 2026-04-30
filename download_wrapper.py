@@ -5,6 +5,7 @@ import random
 import argparse
 import logging
 from datetime import datetime
+from pathlib import Path
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -12,17 +13,22 @@ logger = logging.getLogger(__name__)
 
 def main():
     parser = argparse.ArgumentParser(description="Bulk download Dukascopy data")
-    parser.add_argument('--symbol', type=str, default='XAUUSD', help='Currency pair (e.g., XAUUSD, EURUSD)')
+    parser.add_argument('--symbol', type=str, default='USDJPY', help='Currency pair (e.g., USDJPY, EURUSD, XAUUSD)')
     args = parser.parse_args()
 
-    years = range(2010, 2016) # 2010 to 2015 inclusive
+    years = range(2003, 2027)  # 2003 to 2026 inclusive
     symbol = args.symbol
-    
+
     for i, year in enumerate(years):
         start_date = f"{year}-01-01"
         end_date = f"{year}-12-31"
         output_file = f"data/{symbol}_{year}.csv"
-        
+
+        # Skip if file already exists (resume support)
+        if Path(output_file).exists():
+            logger.info(f"⏭️  Skipping {year} - file already exists: {output_file}")
+            continue
+
         logger.info(f"🚀 Starting download for Year: {year}")
         logger.info(f"   Range: {start_date} -> {end_date}")
         
